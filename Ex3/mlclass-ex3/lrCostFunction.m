@@ -36,14 +36,19 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+n = length(theta);
 
+h_theta_of_x = sigmoid(X * theta);
 
+J = sum((-y .* log(h_theta_of_x)) - ((1 - y) .* log(1 - h_theta_of_x))) / m;
 
+% Regularizing the Cost Function
+J = J + ((lambda * sum(theta(2:end) .^ 2))/(2*m));
 
+grad = (X' * (h_theta_of_x - y)) / m;
 
-
-
-
+% Regularizing the Gradient
+grad(2:end, :) = grad(2:end, :) + (theta(2:end, :) .* lambda)/m;
 
 % =============================================================
 
