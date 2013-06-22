@@ -23,10 +23,23 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+CVec = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+sigmaVec = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 
+min_error = 1000000;
 
-
-
+for C_hyp = CVec(:)'
+	for sigma_hyp = sigmaVec(:)'
+		model = svmTrain(X, y, C_hyp, @(x_1, x_2) gaussianKernel(x_1, x_2, sigma_hyp));
+		predictions = svmPredict(model, Xval);
+		cal_error = mean(double(predictions ~= yval));
+		if(min_error > cal_error)
+			min_error = cal_error;
+			C = C_hyp;
+			sigma = sigma_hyp;
+		endif;
+	endfor;
+endfor;
 
 
 % =========================================================================
