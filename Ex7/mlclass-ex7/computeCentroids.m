@@ -26,15 +26,15 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
-
-
-
-
-
-
+for k = 1:K
+	positions = find(idx == k);
+	count = sum(idx == k);
+	filteredX = X(positions, :);
+	for i = 1:n
+		centroids(k, i) = (sum(filteredX(:, i)) / count);
+	endfor;
+endfor;
 
 % =============================================================
 
-
 end
-

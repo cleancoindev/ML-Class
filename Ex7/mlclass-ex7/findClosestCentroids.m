@@ -21,13 +21,20 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+m = size(X, 1);
 
-
-
-
+for i = 1:m
+	minDist = 100000;
+	for k = 1:K
+		currDist = sum((X(i, :) - centroids(k, :)) .^ 2);
+		if currDist < minDist
+			idx(i) = k;
+			minDist = currDist;
+		end
+	endfor;
+endfor;
 
 
 % =============================================================
 
 end
-
